@@ -1,0 +1,65 @@
+program: scripts/run_wandb_trial.py
+method: bayes
+metric:
+  name: test_attack_f1
+  goal: maximize
+early_terminate:
+  type: hyperband
+  min_iter: 10
+command:
+  - ${env}
+  - "..\\unsw_nb15\\.venv\\Scripts\\python.exe"
+  - ${program}
+  - --base-config
+  - configs/anomaly_forecast_transformer_w100.toml
+  - --mode
+  - anomaly
+  - --group
+  - anomaly_transformer_autoencoder
+  - ${args}
+parameters:
+  experiment.seed:
+    value: 42
+  data.drop_columns_preset:
+    values: [stable_45, all_51]
+  data.window_size:
+    values: [60, 100, 150, 300]
+  data.window_stride:
+    values: [10, 25, 50]
+  model.lstm_hidden:
+    values: [64, 96, 128, 192]
+  model.lstm_layers:
+    values: [1, 2, 3]
+  model.attention_heads:
+    values: [2, 4, 8]
+  model.dense_hidden:
+    values: [128, 256, 384]
+  model.dropout:
+    distribution: uniform
+    min: 0.05
+    max: 0.35
+  training.epochs:
+    value: 60
+  training.early_stopping_patience:
+    value: 10
+  training.batch_size:
+    values: [64, 128, 256]
+  training.learning_rate:
+    distribution: log_uniform_values
+    min: 0.00005
+    max: 0.002
+  training.weight_decay:
+    distribution: log_uniform_values
+    min: 0.000001
+    max: 0.001
+  training.loss:
+    values: [forecast_mse, reconstruction_mse]
+  training.anomaly_score_method:
+    values: [global_mse, max_robust_z, top3_robust_z, top5_robust_z, top10_robust_z]
+  training.anomaly_threshold_percentile:
+    values: [95.0, 97.5, 99.0, 99.5, 99.7, 99.9, 99.95, 99.99]
+  training.anomaly_min_consecutive_windows:
+    values: [1, 2, 3, 5]
+  training.anomaly_merge_gap_windows:
+    values: [0, 1, 2, 5]
+

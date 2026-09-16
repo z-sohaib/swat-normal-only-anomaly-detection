@@ -1,0 +1,41 @@
+[experiment]
+name = "swat_phase2_supervised_official_chronological"
+seed = 42
+output_dir = "runs/phase2_supervised_official_chronological"
+
+[data]
+dataset = "swat"
+task = "binary"
+protocol = "supervised_chronological"
+normal_path = "data/raw/SWaT_Dataset_Normal_v1.csv"
+attack_path = "data/raw/SWaT_Dataset_Attack_v0.csv"
+validation_size = 0.15
+test_size = 0.20
+window_size = 100
+window_stride = 50
+window_label_rule = "any_attack"
+label_column = "Normal/Attack"
+timestamp_column = "Timestamp"
+drop_timestamp = true
+scale_method = "standard"
+processed_output_dir = "data/processed"
+apply_smote = false
+
+[model]
+name = "ms_cnn_bilstm_attention"
+conv_channels = 64
+kernel_sizes = [3, 5, 7]
+lstm_hidden = 128
+lstm_layers = 1
+attention_heads = 4
+dense_hidden = 64
+dropout = 0.30
+
+[training]
+epochs = 30
+batch_size = 128
+learning_rate = 0.001
+weight_decay = 0.0001
+loss = "weighted_cross_entropy"
+early_stopping_patience = 6
+selection_metric = "macro_f1"

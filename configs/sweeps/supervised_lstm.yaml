@@ -1,0 +1,61 @@
+program: scripts/run_wandb_trial.py
+method: bayes
+metric:
+  name: test_attack_f1
+  goal: maximize
+early_terminate:
+  type: hyperband
+  min_iter: 8
+command:
+  - ${env}
+  - "..\\unsw_nb15\\.venv\\Scripts\\python.exe"
+  - ${program}
+  - --base-config
+  - configs/supervised_lstm.toml
+  - --mode
+  - supervised
+  - --group
+  - supervised_lstm
+  - ${args}
+parameters:
+  experiment.seed:
+    value: 42
+  data.window_size:
+    values: [30, 60, 100, 150]
+  data.window_stride:
+    values: [10, 25, 50]
+  data.window_label_rule:
+    values: [any_attack, last_point]
+  model.lstm_hidden:
+    values: [64, 96, 128, 192]
+  model.lstm_layers:
+    values: [1, 2]
+  model.dense_hidden:
+    values: [64, 128, 256]
+  model.dropout:
+    distribution: uniform
+    min: 0.10
+    max: 0.45
+  training.epochs:
+    value: 40
+  training.early_stopping_patience:
+    value: 8
+  training.batch_size:
+    values: [64, 128, 256]
+  training.learning_rate:
+    distribution: log_uniform_values
+    min: 0.0001
+    max: 0.003
+  training.weight_decay:
+    distribution: log_uniform_values
+    min: 0.000001
+    max: 0.001
+  training.loss:
+    values: [weighted_cross_entropy, class_balanced_focal, eql_v2]
+  training.focal_gamma:
+    values: [1.0, 2.0, 3.0]
+  training.selection_metric:
+    values: [macro_f1, weighted_f1]
+  training.threshold_strategy:
+    values: [argmax, binary_f1, binary_macro_f1]
+

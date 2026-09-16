@@ -1,0 +1,63 @@
+# Local environments
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# Python build and cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Dataset files
+data/raw/
+data/interim/
+data/processed/
+data/external/
+data/kaggle/
+data/**/*.csv
+data/**/*.xlsx
+data/**/*.xls
+data/**/*.parquet
+data/**/*.npz
+data/**/*.npy
+data/**/*.pkl
+data/**/*.joblib
+
+# Experiment outputs
+runs/
+wandb/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Generated report exports
+reports/**/*.pdf
+reports/**/*.html
+reports/**/figures/*.png
+reports/**/figures/*.jpg
+reports/**/figures/*.jpeg
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+tmp/
+temp/
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

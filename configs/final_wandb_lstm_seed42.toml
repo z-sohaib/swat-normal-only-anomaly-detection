@@ -1,0 +1,47 @@
+[experiment]
+name = "final_wandb_lstm_seed42"
+seed = 42
+output_dir = "runs/final_wandb_lstm_seed42"
+
+[data]
+dataset = "swat"
+task = "binary_anomaly_detection"
+protocol = "standard_normal_attack"
+normal_path = "data/raw/SWaT_Dataset_Normal_v1.csv"
+attack_path = "data/raw/SWaT_Dataset_Attack_v0.csv"
+attack_list_path = "data/raw/List_of_attacks_Final.xlsx"
+validation_size = 0.15
+test_size = 0.20
+window_size = 60
+window_stride = 25
+window_label_rule = "any_attack"
+label_column = "Normal/Attack"
+timestamp_column = "Timestamp"
+drop_timestamp = true
+drop_columns = ["AIT201", "P201", "FIT601", "P601", "P602", "P603"]
+scale_method = "standard"
+processed_output_dir = "data/processed"
+apply_smote = false
+
+[model]
+name = "lstm_autoencoder"
+conv_channels = 64
+kernel_sizes = [3, 5, 7]
+lstm_hidden = 192
+lstm_layers = 1
+attention_heads = 4
+dense_hidden = 64
+dropout = 0.20947736648599272
+
+[training]
+epochs = 60
+batch_size = 64
+learning_rate = 0.001399907520189366
+weight_decay = 2.4312314492641297e-05
+loss = "reconstruction_mse"
+early_stopping_patience = 10
+anomaly_score_method = "top5_robust_z"
+anomaly_calibration_source = "normal_validation"
+anomaly_threshold_percentile = 99.95
+anomaly_min_consecutive_windows = 5
+anomaly_merge_gap_windows = 2

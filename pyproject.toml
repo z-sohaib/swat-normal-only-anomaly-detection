@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swat-ids"
+version = "0.1.0"
+description = "SWaT anomaly detection experiments for the thesis."
+requires-python = ">=3.12"
+dependencies = [
+    "imbalanced-learn>=0.12",
+    "matplotlib>=3.9",
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "scikit-learn>=1.5",
+    "seaborn>=0.13",
+    "torch>=2.3",
+    "tqdm>=4.66",
+    "wandb>=0.17",
+]
+
+[project.scripts]
+swat-train = "swat_ids.train:main"
+swat-train-anomaly = "swat_ids.train_anomaly:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
