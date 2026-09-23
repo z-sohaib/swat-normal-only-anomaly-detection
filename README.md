@@ -223,11 +223,3 @@ Do not commit:
 - generated cache files.
 
 Keep source code, configs, research notes, and Markdown reports under version control.
-
-## Suggested Repository Names
-
-- `swat-normal-only-anomaly-detection`
-- `swat-ics-anomaly-detection-benchmark`
-- `swat-deep-anomaly-detection`
-
-Recommended: `swat-normal-only-anomaly-detection`
